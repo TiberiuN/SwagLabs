@@ -34,14 +34,14 @@ public class LoginStepDefinition {
     }
 
     public static void loginWithCredentials(String username, String password){
-        if(username == null) {
+        if(username.isEmpty()||username.isBlank()) {
             driver.findElement(By.cssSelector(LoginVars.usernameField)).sendKeys(LoginVars.username);
         }
         else{
             driver.findElement(By.cssSelector(LoginVars.usernameField)).sendKeys(username);
         }
 
-        if(password == null) {
+        if(password.isBlank()||password.isEmpty()) {
             driver.findElement(By.cssSelector(LoginVars.passwordField)).sendKeys(LoginVars.password);
         }
         else{
