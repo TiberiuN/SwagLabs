@@ -5,18 +5,15 @@ import io.cucumber.java.en.Then;
 
 public class LoginSteps {
 
-
-    @io.cucumber.java.en.Given("The URL is set and the page is accessed")
-    public void theURLIsSetAndThePageIsAccessed() {
-        LoginStepDefinition.landingPageInitialization();
-    }
-
-    @Then("The login is performed using {string} and {string}")
-    public void theLoginIsPerformedUsingAnd(String username, String password) {
-        LoginStepDefinition.loginWithCredentials(username, password);
-    }
+    LoginStepDefinition loginStepDefinition = new LoginStepDefinition();
 
     @Then("The logout is performed and the window is closed")
-    public void theLogoutIsPerformedAndTheWindowIsClosed() {
+    public void theLogoutIsPerformedAndTheWindowIsClosed() throws InterruptedException {
+        loginStepDefinition.logout();
+    }
+
+    @Given("The User is on landing page")
+    public void theUserIsOnLandingPage() {
+        loginStepDefinition.loginWithCredentials("", "");
     }
 }

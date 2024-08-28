@@ -7,24 +7,22 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 public class UtilsStepDefinitions {
-    static WebDriver driver = LoginStepDefinition.driver;
 
-    public static void waitForElementVisibleByCss(String locator) throws InterruptedException {
-        for (int i = 0; i <= 20; i++) {
-            TimeUnit.SECONDS.sleep(1);
-            if (driver.findElement(By.cssSelector(locator)).isDisplayed()) {
-                break;
-            }
-        }
+    Hooks hooks = new Hooks();
+     WebDriver driver = hooks.driver;
+
+    public void clickOnCssElement(String locator) {
+        this.driver.findElement(By.cssSelector(locator)).click();
     }
 
-    public static void clickOnCssElement(String locator) {
-        driver.findElement(By.cssSelector(locator)).click();
-    }
-
-    public static void clickOnElement(String locator, String locatorType) {
+    public void clickOnElement(String locator, String locatorType) {
         switch (locatorType) {
+            case "id":
+                driver.findElement(By.id(locator)).click();
+                break;
             case "css":
                 driver.findElement(By.cssSelector(locator)).click();
                 break;
@@ -34,23 +32,29 @@ public class UtilsStepDefinitions {
             case "xpath":
                 driver.findElement(By.xpath(locator)).click();
                 break;
-            case "id":
-                driver.findElement(By.id(locator)).click();
-                break;
         }
-
-
     }
 
-//    public static void clickOnElements(String elementLocator, String elementLocatorType, int indexOfElement){
-//        switch (elementLocatorType) {
-//            case "css": driver.findElement(By.cssSelector(elementLocator)).click();
-//                break;
-//            case "class": List<WebElement> listOfElements = driver.findElements(By.className(elementLocator));
-//                driver.get(listOfElements(0)
-//                break;
-//            case "xpath": driver.findElement(By.xpath(elementLocator)).click();
-//                break;
-//        }
-//}
+    public void driverClose() {
+        this.driver.close();
+    }
+
+    public void assertMessage(String message, String locator, String locatorType) {
+        String actualString = "";
+        switch (locatorType) {
+            case "css":
+                actualString = driver.findElement(By.cssSelector(locator)).getText();
+                break;
+            case "class":
+                actualString = driver.findElement(By.className(locator)).getText();
+                break;
+            case "xpath":
+                actualString = driver.findElement(By.xpath(locator)).getText();
+                break;
+            case "id":
+                actualString = driver.findElement(By.id(locator)).getText();
+                break;
+        }
+        assertTrue(actualString.contains(message));
+    }
 }
