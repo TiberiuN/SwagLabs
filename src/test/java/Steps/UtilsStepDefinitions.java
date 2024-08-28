@@ -84,4 +84,34 @@ public class UtilsStepDefinitions {
         }
 
     }
+
+    public void waitForElementVisible(String locator, String locatorType){
+        WebElement element;
+        Duration duration = Duration.ofSeconds(10);
+        WebDriverWait wait = new WebDriverWait(driver, duration);
+
+        switch (locatorType) {
+            case "id":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id(locator)));
+                assertTrue(element.isDisplayed());
+                break;
+            case "css":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
+                assertTrue(element.isDisplayed());
+                break;
+            case "class":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.className(locator)));
+                assertTrue(element.isDisplayed());
+                break;
+            case "xpath":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+                assertTrue(element.isDisplayed());
+                break;
+        }
+
+    }
 }

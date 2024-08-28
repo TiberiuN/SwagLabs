@@ -1,4 +1,4 @@
-Feature: Test
+Feature: Checking login and logout actions
 
   Scenario Outline: The User tries to login with bad credentials
     Given The User enters bad credentials "<username>" and "<password>"
