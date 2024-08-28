@@ -3,9 +3,10 @@ package Steps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -35,10 +36,6 @@ public class UtilsStepDefinitions {
         }
     }
 
-    public void driverClose() {
-        this.driver.close();
-    }
-
     public void assertMessage(String message, String locator, String locatorType) {
         String actualString = "";
         switch (locatorType) {
@@ -56,5 +53,35 @@ public class UtilsStepDefinitions {
                 break;
         }
         assertTrue(actualString.contains(message));
+    }
+
+    public void waitForElementClickable(String locator, String locatorType){
+        WebElement element;
+        Duration duration = Duration.ofSeconds(10);
+        WebDriverWait wait = new WebDriverWait(driver, duration);
+
+        switch (locatorType) {
+            case "id":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id(locator)));
+                element.click();
+                break;
+            case "css":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
+                element.click();
+                break;
+            case "class":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.className(locator)));
+                element.click();
+                break;
+            case "xpath":
+                element = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+                element.click();
+                break;
+        }
+
     }
 }
