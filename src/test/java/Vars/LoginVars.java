@@ -11,4 +11,5 @@ public class LoginVars {
     public static String usernameField = "#user-name";
     public static String passwordField = "#password";
     public static String loginButton = "#login-button";
+    public static String logoutButton = "#logout_sidebar_link";
 }
